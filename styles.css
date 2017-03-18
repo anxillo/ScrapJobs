@@ -1,0 +1,40 @@
+body {
+    font: normal 20px/1 "Trebuchet MS", Helvetica, sans-serif;
+    color: black;
+
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: red;
+}
+
+a:visited {
+    color: gray;
+}
+
+li {
+-webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width: 80%;
+  padding: 5px;
+  margin: 5px;
+  overflow: hidden;
+  border: none;
+  font: normal 16px/1 "Trebuchet MS", Helvetica, sans-serif;
+  color: rgba(255,255,255,1);
+  text-align: left;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  background: #b4b4b4;
+  }
+
+  li:hover {
+   background-color: black;
+  }
