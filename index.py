@@ -1,13 +1,17 @@
+#!/usr/bin/python
+
 import requests
 from bs4 import BeautifulSoup
+import time
 
 
-input_string = 'manager'
-input_days = 10
-#input_location = 'Ticino (cantone)'
-#input_hlocation = 'KTNTI'
+input_string = 'digital'
+input_days = 1
 input_location = ''
 input_hlocation = ''
+#input_location = 'Ticino (cantone)'
+#input_hlocation = 'KTNTI'
+
 
 url = 'https://www.job-room.ch/pages/job/jobSearch.xhtml'
 url_result = 'https://www.job-room.ch/pages/job/jobResult.xhtml#'
@@ -104,7 +108,7 @@ with requests.session() as s:
         for a in soup.find_all('a', class_='extern'):
             link = a['href']
 
-        url_string = '<a href="' + link + '" target="_blank">' + text + '</a> - <a href="' + url_result + str(pages[pages.index(each_page)]) + '" target="_blank">Description</a>'
+        url_string = str(time.asctime( time.localtime(time.time()) )) + ': <a href="' + link + '" target="_blank">' + text + '</a> - <a href="' + url_result + str(pages[pages.index(each_page)]) + '" target="_blank">Description</a>'
 
         urls.append(url_string)
 
