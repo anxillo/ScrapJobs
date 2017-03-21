@@ -6,7 +6,7 @@ import time
 
 
 input_string = 'digital'
-input_days = 1
+input_days = 3
 input_location = ''
 input_hlocation = ''
 #input_location = 'Ticino (cantone)'
