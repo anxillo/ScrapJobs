@@ -28,6 +28,7 @@ def create_db (db):
                             searchword  TEXT,
                             location    TEXT,
                             jobs_id     TEXT UNIQUE,
+                            firm        TEXT,
                             title       TEXT,
                             link        TEXT
                         ); '''
@@ -52,11 +53,11 @@ def update_db(db, data):
     Update the database with the provided data
 
     :param db: database path/name
-    :param data: the data tuple: time, searchword, location, jobs_id, title, link
+    :param data: the data tuple: time, searchword, location, jobs_id, firm, title, link
     :return:
     """
 
-    insert_row = '''INSERT INTO jobs (time, searchword, location, jobs_id, title, link) VALUES (?, ?, ?, ?, ?, ?) '''
+    insert_row = '''INSERT INTO jobs (time, searchword, location, jobs_id, firm, title, link) VALUES (?, ?, ?, ?, ?, ?, ?) '''
 
     if os.path.isfile(db):  # check if database already exist
         conn = lite.connect(db)
@@ -163,11 +164,14 @@ def scrape_jobs(description, days, location, hlocation):
                 text = job.get_text()
                 text = text.splitlines()[1]  # keep only useful part
 
+            for firm in soup.find_all('fieldset', class_='detail', limit=1):   #search for firm name
+                firmtext = firm.get_text()
+                firmtext = firmtext.splitlines()[5]
 
             for a in soup.find_all('a', class_='extern'):  # retrieve external link
                 link = a['href']
 
-            item = (str(time.time()), description, location, jobsIds[jobsIds.index(each_page)], text , link) # create tuple
+            item = (str(time.time()), description, location, jobsIds[jobsIds.index(each_page)], firmtext, text , link) # create tuple
 
             update_db(db, item)  #send tuple to db
 
@@ -176,13 +180,15 @@ def scrape_jobs(description, days, location, hlocation):
 
 # Run the function with 4 different requests
 
-scrape_jobs('digital', 2, '', '')  # scrape for keyword 'digital', 2 days from now
+scrape_jobs('', 2, 'Ticino (cantone)', 'KTNTI')  # scrape for all jobs in 'Ticino', 2 day from now
+
+scrape_jobs('digital', 2, '', '')  # scrape for keyword 'digital', 2 day from now
 
 scrape_jobs('web', 2, '', '')  # scrape for keyword 'web', 2 days from now
 
 scrape_jobs('online', 2, '', '')  # scrape for keyword 'online', 2 days from now
 
-scrape_jobs('', 2, 'Ticino (cantone)', 'KTNTI')  # scrape for all jobs in 'Ticino', 2 days from now
+
 
 
 

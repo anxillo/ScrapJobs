@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 import time
 
 
-input_string = 'digital'
-input_days = 3
+input_string = ''
+input_days = 1
 input_location = ''
 input_hlocation = ''
 #input_location = 'Ticino (cantone)'
